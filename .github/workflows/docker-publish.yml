@@ -9,7 +9,7 @@ on:
     branches: [ master ]
 
 jobs:
-  php_cli:
+  php_fpm:
     runs-on: ubuntu-latest
     permissions:
       contents: read
