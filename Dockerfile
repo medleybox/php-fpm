@@ -58,4 +58,8 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 HEALTHCHECK --interval=20s --timeout=5s --start-period=30s \  
   CMD bin/docker-console
 
-RUN php -i; php -v
+ENTRYPOINT ["/docker-entrypoint"]
+
+COPY docker-entrypoint /docker-entrypoint
+
+RUN php -i; php -v; mkdir -p /var/www/bin; echo "echo 'medleybox'; docker-php-entrypoint php-fpm" > /var/www/bin/docker-entrypoint; chmod +x /var/www/bin/docker-entrypoint

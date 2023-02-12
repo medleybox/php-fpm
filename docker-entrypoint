@@ -1,0 +1,31 @@
+#!/bin/sh
+
+bin/console cache:warmup
+bin/console doctrine:schema:validate
+
+if [ "$APP_ENV" == "dev" ]
+then
+  echo "Disabling opcache"
+  echo "" >> /usr/local/etc/php/conf.d/php-common.ini
+  echo "opcache.enable=0" >> /usr/local/etc/php/conf.d/php-common.ini
+
+  echo "Resetting permissions"
+  chown -Rvf 82:82 /var/www
+
+  echo "Downloading latest composer"
+
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  php composer-setup.php 
+  php -r "unlink('composer-setup.php');"
+
+  set -x
+
+  php composer.phar install -v --ignore-platform-reqs
+
+  php bin/console doctrine:database:create --if-not-exists
+  php bin/console doctrine:schema:update --force
+
+fi
+exec /var/www/bin/docker-entrypoint
+
+exec docker-php-entrypoint php-fpm
