@@ -10,7 +10,7 @@ then
   echo "opcache.enable=0" >> /usr/local/etc/php/conf.d/php-common.ini
 
   echo "Resetting permissions"
-  chown -Rvf 82:82 /var/www
+  chown -Rf 82:82 /var/www
 
   echo "Downloading latest composer"
 
