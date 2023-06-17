@@ -26,6 +26,21 @@ then
   php bin/console doctrine:schema:update --force
 
 fi
+
+echo "Setting www.conf from ENV";
+echo "; Medleybox config" >> /usr/local/etc/php-fpm.d/www.conf
+
+echo "Setting workers count '$FPM_WORKERS'"
+echo "pm = static" >> /usr/local/etc/php-fpm.d/www.conf
+echo "pm.max_children = $FPM_WORKERS" >> /usr/local/etc/php-fpm.d/www.conf
+
+echo "Setting worker memory limit to '$FPM_MEMORY_LIMIT'"
+echo "php_admin_value[memory_limit] = $FPM_MEMORY_LIMIT" >> /usr/local/etc/php-fpm.d/www.conf
+
+echo ""
+
+cat /usr/local/etc/php-fpm.d/www.conf
+
 exec /var/www/bin/docker-entrypoint
 
 exec docker-php-entrypoint php-fpm

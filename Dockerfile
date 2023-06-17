@@ -10,7 +10,9 @@ ENV APP_ENV=prod \
   PAGER='busybox less' \
   MINIO_ENDPOINT='http://minio:9000' \
   REDIS_VERSION='5.3.7' \
-  REDIS_URL='redis://redis'
+  REDIS_URL='redis://redis' \
+  FPM_WORKERS='4' \
+  FPM_MEMORY_LIMIT='128M'
 
 RUN apk add --no-cache --virtual .build-deps \
     autoconf \
@@ -62,4 +64,5 @@ ENTRYPOINT ["/docker-entrypoint"]
 
 COPY docker-entrypoint /docker-entrypoint
 
-RUN php -i; php -v; mkdir -p /var/www/bin; echo "echo 'medleybox'; docker-php-entrypoint php-fpm" > /var/www/bin/docker-entrypoint; chmod +x /var/www/bin/docker-entrypoint
+RUN php -i; php -v; mkdir -p /var/www/bin; echo "echo 'medleybox'; docker-php-entrypoint php-fpm" > /var/www/bin/docker-entrypoint; chmod +x /var/www/bin/docker-entrypoint \
+  && chown 82:82 /usr/local/etc/php-fpm.d/www.conf
