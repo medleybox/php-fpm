@@ -1,4 +1,6 @@
-FROM php:8.3-fpm-alpine3.18
+ARG PHP_VERSION=8
+ARG ALPINE_VERSION=3.18
+FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION}
 
 WORKDIR /var/www
 
