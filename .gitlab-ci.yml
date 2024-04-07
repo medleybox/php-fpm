@@ -10,6 +10,8 @@ services:
 build:version:
   stage: build
   image: php:8-alpine
+  tags:
+    - docker
   script:
    - php latest.php > latest.txt
 build:docker:
