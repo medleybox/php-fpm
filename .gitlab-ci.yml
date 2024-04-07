@@ -12,11 +12,17 @@ build:version:
   image: php:8-alpine
   tags:
     - docker
+  artifacts:
+    when: on_success
+    paths:
+      - latest.txt
   script:
    - php latest.php > latest.txt
 build:docker:
   stage: build
-  needs: ["build:version"]
+  needs:
+    - job: build:version
+      artifacts: true
   tags:
     - docker
   script:
