@@ -5,6 +5,7 @@ FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION}
 WORKDIR /var/www
 
 ENV APP_ENV=prod \
+  POSTGRES_HOST='db' \
   POSTGRES_DB='' \
   POSTGRES_USER=medleybox \
   POSTGRES_PASSWORD='' \
