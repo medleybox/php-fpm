@@ -1,6 +1,6 @@
 ARG PHP_VERSION=8
 ARG ALPINE_VERSION=3.18
-FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION}
+FROM php:${PHP_VERSION}-fpm-alpine
 
 WORKDIR /var/www
 
